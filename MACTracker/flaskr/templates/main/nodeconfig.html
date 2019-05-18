@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Node Configuration{% endblock %}</h2>
+  {% if g.user %}
+  	<a class="action" href="{{ url_for('main.index') }}">Go Back</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+	<br>
+	<div style="width: 50%; margin: 0 auto">
+		<p>
+			<a class="btn btn-info btn-block my-4" class="action" class="action" href="{{ url_for('main.node_register') }}" style="background-color: #0065c2; border-color: #0065c2">Register a Node</a>
+			<a class="btn btn-info btn-block my-4" class="action" class="action" href="{{ url_for('main.select_node') }}" style="background-color: #0065c2; border-color: #0065c2">Select a Node</a>
+		</p>
+	</div>
+	
+{% endblock %}

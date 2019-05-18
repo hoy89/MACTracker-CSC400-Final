@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h2>{% block title %}Area Creation{% endblock %}</h2>
+	{% if g.user %}
+		<a class="action" href="{{ url_for('main.area_config') }}">Go Back</a>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div style="width: 50%; margin: 0 auto">
+		<form class="text-center border border-light p-5" method="post">
+			<input name="areaName" id="areaName" class="form-control mb-4" value="{{ request.form['areaName'] }}" placeholder="Area Name" required>
+			<input name="nodelist" id="nodelist" class="form-control mb-4" value="{{ request.form['nodelist'] }}" placeholder="Nodes (Seperated by Comma)">
+			<input class="btn btn-info btn-block my-4" style="background-color: #0065c2; border-color: #0065c2" type="submit" value="Save">
+		</form>
+	</div>
+{% endblock %}

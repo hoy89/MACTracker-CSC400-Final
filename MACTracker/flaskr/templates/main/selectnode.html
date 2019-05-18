@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Node Configuration{% endblock %}</h2>
+  {% if g.user %}
+  	<a class="action" href="{{ url_for('main.node_config') }}">Go Back</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for node in nodes %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ node['nodeName'] }}</h1>
+          <div class="about">Area Name: {{ node['areaName'] }}</div>
+          <div class="about">Node IP: {{ node['nodeIP'] }}</div>
+        </div>
+      </header>
+    </article>
+  {% endfor %}
+{% endblock %}

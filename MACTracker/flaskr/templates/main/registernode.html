@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h2>{% block title %}Node Registration{% endblock %}</h2>
+	{% if g.user %}
+		<a class="action" href="{{ url_for('main.node_config') }}">Go Back</a>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div style="width: 50%; margin: 0 auto">
+		<form class="text-center border border-light p-5" method="post">
+			<input name="name" id="name" class="form-control mb-4" value="{{ request.form['name'] }}" placeholder="Name" required>
+			<input name="nodeip" id="nodeip" class="form-control mb-4" value="{{ request.form['nodeip'] }}" placeholder="IP Address" required>
+			<input name="areaname" id="areaname" class="form-control mb-4" value="{{ request.form['areaname'] }}" placeholder="Area Name" required>
+			<input type="submit" class="btn btn-info btn-block my-4" style="background-color: #0065c2; border-color: #0065c2" value="Save">
+		</form>
+	</div>
+{% endblock %}

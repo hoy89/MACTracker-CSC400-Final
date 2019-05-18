@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Sign In{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+	<div style="width: 50%; margin: 0 auto">
+		<form class="text-center border border-light p-5" method="post">
+			<input type="username" id="username" name="username" class="form-control mb-4" placeholder="Username">
+			<input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
+			<button class="btn btn-info btn-block my-4" type="submit" style="background-color: #0065c2; border-color: #0065c2">Sign in</button>
+		</form>
+	</div>
+{% endblock %}

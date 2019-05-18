@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h2>{% block title %}General{% endblock %}</h2>
+{% endblock %}
+{% block content %}
+<section class="content">
+  <div align="center" style="display: inline-block; padding-left: 3.5%">
+    <canvas id="totalByHour" width="400" height="400"></canvas>
+    <script>
+      Chart.defaults.global.defaultFontColor = '#121212';
+      var ctx = document.getElementById('totalByHour').getContext('2d');
+      var totalByHour = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ['0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00','9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00','21:00', '22:00', '23:00'],
+              datasets: [{
+                  label: '# Devices Detected',
+                  data: {{ timebreakdown|safe }},
+                  backgroundColor: '#323232',
+                  borderColor: '#0065c2',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'Total Detections by Hour'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+    </script>
+  </div>
+  <div align="center" style="display: inline-block; padding-left: 3.5%">
+    <canvas id="totalByDay" width="400" height="400"></canvas>
+    <script>
+      var ctx = document.getElementById('totalByDay').getContext('2d');
+      var totalByDay = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+              datasets: [{
+                  label: '# Devices Detected',
+                  data: {{ datebreakdown|safe }},
+                  backgroundColor: '#323232',
+                  borderColor: '#0065c2',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'Total Detections by Day'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+    </script>
+  </div>
+  <div align="center" style="display: inline-block; padding-left: 3.5%">
+    <canvas id="uniqueByArea" width="400" height="400"></canvas>
+    <script>
+      var ctx = document.getElementById('uniqueByArea').getContext('2d');
+      var totalByArea = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: {{ areaArray|safe }},
+              datasets: [{
+                  label: '# Devices Detected',
+                  data: {{ areaDetectionArray|safe }}, 
+                  backgroundColor: '#323232',
+                  borderColor: '#0065c2',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'Detections by Area - General'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }],
+                  xAxes: [{
+                      maxBarThickness: 150
+                  }]
+              }
+          }
+      });
+    </script>
+  </div>
+  <div align="center" style="display: inline-block; padding-left: 3.5%">
+    <canvas id="averageTimeArea" width="400" height="400"></canvas>
+    <script>
+      var ctx = document.getElementById('averageTimeArea').getContext('2d');
+      var averageTimeArea = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: {{ areaArray|safe }},
+              datasets: [{
+                  label: '# Time in Minutes',
+                  data: {{ averageTimeSpent|safe }}, 
+                  backgroundColor: '#323232',
+                  borderColor: '#0065c2',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'Average Time Spent by Area'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }],
+                  xAxes: [{
+                      maxBarThickness: 150
+                  }]
+              }
+          }
+      });
+    </script>
+  </div>
+  <div align="center" style="display: inline-block; padding-left: 3.5%">
+    <canvas id="totalByArea" width="400" height="400"></canvas>
+    <script>
+      var ctx = document.getElementById('totalByArea').getContext('2d');
+      var totalByArea = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: {{ areaArray|safe }},
+              datasets: [{
+                  label: '# Devices Detected',
+                  data: {{ areaDetectionArrayALT|safe }}, 
+                  backgroundColor: '#323232',
+                  borderColor: '#0065c2',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'Raw Detections by Area (Activity Level) - General'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }],
+                  xAxes: [{
+                      maxBarThickness: 150,
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Ommited Devices: {{ ommitedDevices }}'
+                    }
+                  }]
+              }
+          }
+      });
+    </script>
+  </div>
+  <div align="center" style="display: inline-block; padding-left: 3.5%">
+    <canvas id="liveByArea" width="400" height="400"></canvas>
+    <script>
+      var ctx = document.getElementById('liveByArea').getContext('2d');
+      var liveByArea = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: {{ areaArray|safe }},
+              datasets: [{
+                  label: '# Devices Currently Present',
+                  data: {{ liveArray|safe }}, 
+                  backgroundColor: '#323232',
+                  borderColor: '#0065c2',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'Devices Currently Present'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+    </script>
+  </div>
+</section>
+
+<section class="content">
+  <header>
+    <h2>Statistics by Area</h2>
+  </header>
+    {% for area in areas %}
+      
+      <h3 align="center" style="background-color: #323232; color: #FFFFFF;font-weight:100">{{ area['areaName'] }}</h3>
+      <div align="center" style="display: inline-block; padding-left: 3.5%">
+        <canvas id="time_{{ loop.index }}" width="400" height="400"></canvas>
+        <script>
+          var ctx = document.getElementById('time_{{ loop.index }}').getContext('2d');
+          var time_{{ loop.index }} = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: ['0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00','9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00','21:00', '22:00', '23:00'],
+                  datasets: [{
+                      label: '# Devices Detected',
+                      data: {{ timeArray[loop.index0] }},
+                      backgroundColor: '#323232',
+                      borderColor: '#0065c2',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  responsive: false,
+                  title: {
+                    display: true,
+                    text: 'Detections by Time'
+                  },
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero: true
+                          }
+                      }]
+                  }
+              }
+          });
+        </script>
+      </div>
+      <div align="center" style="display: inline-block; padding-left: 3.5%">
+        <canvas id="date_{{ loop.index }}" width="400" height="400"></canvas>
+        <script>
+          var ctx = document.getElementById('date_{{ loop.index }}').getContext('2d');
+          var date_{{ loop.index }} = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+                  datasets: [{
+                      label: '# Devices Detected',
+                      data: {{ dateArray[loop.index0] }},
+                      backgroundColor: '#323232',
+                      borderColor: '#0065c2',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  responsive: false,
+                  title: {
+                    display: true,
+                    text: 'Detections by Day'
+                  },
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero: true
+                          }
+                      }]
+                  }
+              }
+          });
+        </script>
+      </div>
+
+      <div align="center" style="display: inline-block; padding-left: 3.5%">
+        <canvas id="node_{{ loop.index }}" width="400" height="400"></canvas>
+        <script>
+          var ctx = document.getElementById('node_{{ loop.index }}').getContext('2d');
+          var node_{{ loop.index }} = new Chart(ctx, {
+
+              type: 'bar',
+              data: {
+
+                  labels: {{ areaNodeArray[loop.index0]|safe }},
+                  datasets: [{
+                      label: '# Devices Detected',
+                      data: {{ areaNodeDetArray[loop.index0]|safe }}, 
+                      backgroundColor: '#323232',
+                      borderColor: '#0065c2',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+
+                  responsive: false,
+                  title: {
+                    display: true,
+                    text: 'Detections by Node - General'
+                  },
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero: true
+                          }
+                      }],
+                      xAxes: [{
+                          maxBarThickness: 150
+                      }]
+                  }
+              }
+          });
+        </script>
+      </div>
+      
+    {% endfor %}
+</section>
+{% endblock %}

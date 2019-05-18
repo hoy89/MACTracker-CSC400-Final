@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Area Selection{% endblock %}</h2>
+  {% if g.user %}
+  	<a class="action" href="{{ url_for('main.area_config') }}">Go Back</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for area in areas %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ area['areaName'] }}</h1>
+          <div class="about">Nodes: (To Be Implemented)</div>
+          {% if 'Default' not in area['areaName'] %}
+            <form method="post" style="margin: 0; margin-top: 1%">
+              <input type=hidden value="{{ area['areaName'] }}" name=areaName>
+              <input class="btn btn-info" style="background-color: #0065c2; border-color: #0065c2" type="submit" name="delete" value="Delete">
+            </form>
+          {% endif %}
+        </div>
+      </header>
+    </article>
+  {% endfor %}
+{% endblock %}

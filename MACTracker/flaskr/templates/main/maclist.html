@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Detected Addresses{% endblock %}</h2>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('main.index') }}">Go Back</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+</section>
+<div class="container" style="padding: 0; margin: 0">
+  <table class="table table-hover" style="font-size: 50%">
+    <thead>
+      <tr>
+        <td><b>MAC Address</td>
+        <td><b>Area Name</td>
+        <td><b>Device Type</td>
+        <td><b>Node</td>
+        <td><b>Detect Time</td>
+        <td><b>Detect Date</td>
+        <td><b>Previous Time</td>
+        <td><b>Previous Date</td>
+        <td><b>Previous Node</td>
+        <td><b>Previous Area</td>
+        <td><b>Network</td>
+        <td><b>Time Detected</td>
+        <td><b>Detection Count</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for macAddress in macAddressPool %}
+        <tr>
+          <td>
+            {{ macAddress['macAddress'] }}
+          </td>
+          <td>
+            {{ macAddress['areaName'] }}
+          </td>
+          <td>
+            {{ macAddress['deviceType'] }}
+          </td>
+          <td>
+            {{ macAddress['nodeName'] }}
+          </td>
+          <td>
+            {{ macAddress['lastDetectTime'] }}
+          </td>
+          <td>
+            {{ macAddress['lastDetectDate'] }}
+          </td>
+          <td>
+            {{ macAddress['lastAliveTime'] }}
+          </td>
+          <td>
+            {{ macAddress['previousAliveDate'] }}
+          </td>
+          <td>
+            {{ macAddress['previousNode'] }}
+          </td>
+          <td>
+            {{ macAddress['previousArea'] }}
+          </td>
+          <td>
+            {{ macAddress['detectedNetwork'] }}
+          </td>
+          <td>
+            {{ macAddress['timeSpentLive'] }}
+          </td>
+          <td>
+            {{ macAddress['detectionCount'] }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
